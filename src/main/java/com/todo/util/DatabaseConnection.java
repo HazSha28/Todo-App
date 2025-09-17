@@ -1,22 +1,25 @@
 package com.todo.util;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DatabaseConnection {
-    private static final String URL = "jdbc:mysql://localhost:3306/todo";
-    private static final String USERNAME = "root";
-    public static final String PASSWORD = "Open05##";
+public class DatabaseConnection{
+    public static final String URL="jdbc:mysql://localhost:3306/todo";
+    public static final String USERNAME= "root";
+    public static final String PASSWORD="Open05##";
 
-    static{
+    static 
+    {
         try{
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        }catch(ClassNotFoundException e){
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        }
+        catch(ClassNotFoundException e)
+        {
             System.out.println("JDBC Driver is missing");
         }
     }
-    public Connection getDBConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USERNAME, PASSWORD);
+    public static Connection getDBConnection() throws SQLException
+    {
+        return DriverManager.getConnection(URL,USERNAME,PASSWORD);
     }
 }
