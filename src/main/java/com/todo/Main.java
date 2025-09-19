@@ -1,4 +1,5 @@
 package com.todo;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -8,37 +9,31 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import com.todo.gui.TodoAppGUI;
 import com.todo.util.DatabaseConnection;
-public class Main{
-    public static void main(String args [])
-    {
+
+public class Main {
+    public static void main(String[] args) {
         DatabaseConnection db_Connection = new DatabaseConnection();
-        try{
-            
+        //db connection test
+        try {
             Connection cn = db_Connection.getDBConnection();
-            System.out.println("The database connection is successful");
-            
-        }
-        catch(SQLException e){
-            System.err.println("The database connection has failed");
+            System.out.println("Connected to the database");
+        } catch (SQLException e) {
+            System.out.println("Failed to connect to the database " + e.getMessage());
             System.exit(1);
         }
-        try{
+        //UI setup test
+        try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+            System.err.println("Could not set look and feel " + e.getMessage());
         }
-        catch(ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e){
-            System.err.println("Could not set look and feel "+ e.getMessage());
-        }
-        SwingUtilities.invokeLater(
-            ()->{
-                try
-                {
+        //launch the GUI in the Event Dispatch Thread
+        SwingUtilities.invokeLater(() -> {
+            try {
                 new TodoAppGUI().setVisible(true);
-                }
-                catch(Exception e)
-                {
-                    System.err.println("Error starting the application" +e.getMessage());
-                }
-            });
-
+            } catch (Exception e) {
+                System.err.println("Error starting the application " + e.getLocalizedMessage());
+            }
+        });
     }
 }
