@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class TodoAppGUI extends JFrame{
-    private TodoAppDAO todoDAO;
+    private TodoAppDAO todoDAO;//attribute value ,it is the connect btw GUI and DAO,also known as reference variable
     private JTable todoTable;
     private DefaultTableModel tableModel;
     private JTextField titleField;
@@ -50,7 +50,7 @@ public class TodoAppGUI extends JFrame{
         todoTable.getSelectionModel().addListSelectionListener(
             (e)->{ // e contains the selcted row
                 if(!e.getValueIsAdjusting()){
-                    // loadSelectedtodo();
+                    loadSelectedtodo();
 
                 }
             }
@@ -71,7 +71,7 @@ public class TodoAppGUI extends JFrame{
         String []filterOptions={"All","Completed","Pending"};
         filterComboBox=new JComboBox<>(filterOptions);
         filterComboBox.addActionListener((e)->{
-            // filterTodos();
+            filterTodos();
         });
 
     }
@@ -233,6 +233,22 @@ public class TodoAppGUI extends JFrame{
         e.printStackTrace();
     }
 } 
+ private void filterTodos(){
+        String selected=(String)filterComboBox.getSelectedItem();
+        try{
+            List<Todo> todos=todoDAO.getAllTodos();
+            if(selected.equals("Completed")){
+                todos.removeIf(t->!t.isCompleted());
+            }
+            else if(selected.equals("Pending")){
+                todos.removeIf(Todo::isCompleted);
+            }
+            updateTable(todos);
+        }
+        catch(SQLException e){
+            JOptionPane.showMessageDialog(this, "Error fetching todos", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     private void refreshTodo(){
         
