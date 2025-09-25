@@ -251,6 +251,12 @@ public class TodoAppGUI extends JFrame{
     }
 
     private void refreshTodo(){
+        titleField.setText("");
+        descriptionArea.setText("");
+        completedCheckBox.setSelected(false);
+        loadTodos();
+        todoTable.clearSelection();
+        JOptionPane.showMessageDialog(this, "Todos refreshed successfully", "Refresh", JOptionPane.INFORMATION_MESSAGE);
         
     }
 

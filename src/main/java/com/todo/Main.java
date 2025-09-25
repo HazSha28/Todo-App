@@ -1,14 +1,16 @@
 package com.todo;
+//database setup
+import java.sql.Connection;//brings connection from java sql package
+import java.sql.SQLException;//imports sql exception handling
 
-import java.sql.Connection;
-import java.sql.SQLException;
+//SwingUI setup
+import javax.swing.SwingUtilities;//contains utility methods for Swing,lets run gui in event dispatch thread using invokelater
+import javax.swing.UIManager;//controls look and feel of the GUI
+import javax.swing.UnsupportedLookAndFeelException;//handles exceptions related to unsupported look and feel settings
 
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-
-import com.todo.gui.TodoAppGUI;
-import com.todo.util.DatabaseConnection;
+//own project imports
+import com.todo.gui.TodoAppGUI;//imports the custom class TodoAppGUI, main GUI class for the Todo application-for user interaction in window JFrame
+import com.todo.util.DatabaseConnection;//imports the custom class DatabaseConnection, manages database connections with methods like getDBConnection()
 
 public class Main {
     public static void main(String[] args) {
@@ -27,6 +29,7 @@ public class Main {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
             System.err.println("Could not set look and feel " + e.getMessage());
         }
+        
         //launch the GUI in the Event Dispatch Thread
         SwingUtilities.invokeLater(() -> {
             try {
